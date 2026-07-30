@@ -14,7 +14,9 @@ class ApiService {
   final http.Client _client;
 
   // Android emulator cannot see the host's localhost: use 10.0.2.2
-  static const _base = 'http://10.0.2.2:3734'; // Chrome/desktop: localhost
+  // iOS simulator prefers localhost, and I prefer iOS simulator lol
+  static const _base = 'http://localhost:3734';
+  // static const _base = 'http://10.0.2.2:3734'; // Chrome/desktop: localhost
 
   Future<List<KaiEvent>> fetchEvents() async {
     final response = await _client.get(Uri.parse('$_base/events'));
