@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:kai_finder_lab/features/feed/portions_pill.dart';
 import 'package:provider/provider.dart';
 
 import '../../data/models/kai_event.dart';
@@ -146,9 +147,18 @@ class KaiEventCard extends StatelessWidget {
             event.name,
             style: const TextStyle(fontWeight: FontWeight.bold),
           ),
-          subtitle: Text(
-            '${event.location}  -  ${event.portionsLeft} left$howFar',
-          ),
+          // subtitle: Text(
+          //   '${event.location}  -  ${event.portionsLeft} ${PortionsPill(event:event)} $howFar',
+          // ),
+          // subtitle: Row(Text(
+          //   '${event.location}  -  ${event.portionsLeft} ${PortionsPill(event:event)} $howFar',
+          // ),
+          // subtitle: PortionsPill(event:event),
+          subtitle: Row(children: [
+            Text('${event.location}  - '),// ${event.portionsLeft}'),
+            PortionsPill(event:event),
+            Text(howFar)
+          ],),
           trailing: FavouriteButton(event: event),
         ),
       ),
