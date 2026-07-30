@@ -157,8 +157,11 @@ class KaiEventCard extends StatelessWidget {
           subtitle: Row(children: [
             Text('${event.location}  - '),// ${event.portionsLeft}'),
             PortionsPill(event:event),
-            Text(howFar)
-          ],),
+            Text(howFar),
+            EatButton(event: event),
+          ],
+
+          ),
           trailing: FavouriteButton(event: event),
         ),
       ),
@@ -183,6 +186,25 @@ class FavouriteButton extends StatelessWidget {
     return IconButton(
       icon: Icon(isFav ? Icons.star : Icons.star_border),
       color: isFav ? Colors.amber : null,
+      tooltip: 'Favourite',
+      onPressed: () =>
+          context.read<EventsViewModel>().toggleFavourite(event.id),
+    );
+  }
+}
+
+class EatButton extends StatelessWidget {
+  const EatButton({super.key, required this.event});
+
+  final KaiEvent event;
+
+  @override
+  Widget build(BuildContext context) {
+    final vm = context.watch<EventsViewModel>();
+    final isEaten = vm.isFavourite(event.id);
+    return IconButton(
+      icon: Icon(isEaten ? Icons.star : Icons.star_border),
+      color: isEaten ? Colors.amber : null,
       tooltip: 'Favourite',
       onPressed: () =>
           context.read<EventsViewModel>().toggleFavourite(event.id),
