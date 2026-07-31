@@ -32,6 +32,19 @@ class EventsViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> kaiCookMore() async{
+    isLoading = true;
+    error = null;
+    notifyListeners();
+    try {
+      events = await repo.cookMore();
+    } catch (e) {
+      error = 'Could not reach the Kai server';
+    }
+    isLoading = false;
+    notifyListeners();
+  }
+
   void toggleFavourite(String id) {
     if (!_favouriteIds.remove(id)) {
       _favouriteIds.add(id);

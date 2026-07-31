@@ -17,6 +17,9 @@ class PortionsPill extends StatelessWidget{
     if(!event.isActive){
       curColor = Colors.grey;
       portionsTitle = "Gone";
+    }else if (event.portionsLeft >20){
+      curColor = Colors.purple;
+      portionsTitle = "TOO MANY";
     }else if (event.portionsLeft >10){
       curColor = Colors.green;
       portionsTitle = "Plenty";

@@ -54,9 +54,27 @@ class KaiHomePage extends StatelessWidget {
       ),
       // Loading, error, data. Every screen that fetches owes you all three.
       body: const EventsFeed(),
-      bottomNavigationBar: BottomNavigationBar(items: [
-        BottomNavigationBarItem(icon: Icon(Icons.refresh), label: "Refresh"),BottomNavigationBarItem(icon: Icon(Icons.restaurant_outlined), label: "Cook More")
-      ]),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: 0,
+        onTap: (index) {
+          if (index == 0) {
+            context.read<EventsViewModel>().load();
+          }
+          if(index == 1){
+            context.read<EventsViewModel>().kaiCookMore();
+          }
+        },
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.refresh),
+            label: 'Refresh',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.restaurant_outlined),
+            label: 'Cook More',
+          ),
+        ],
+      ),
     );
   }
 }

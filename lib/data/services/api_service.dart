@@ -41,4 +41,15 @@ class ApiService {
 
     return KaiEvent.fromJson(mealsRemain as Map<String, dynamic>);
   }
+
+// gettin real tired of restarting the server
+  Future<List<KaiEvent>> kaiCookMore() async {
+    final response = await _client.post(Uri.parse("$_base/events/cookMore"));
+
+    if (response.statusCode != 200) {
+      throw Exception('Server said ${response.statusCode}');
+    }
+
+    return await fetchEvents();
+  }
 }
