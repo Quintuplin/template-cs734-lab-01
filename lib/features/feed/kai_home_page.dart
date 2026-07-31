@@ -54,6 +54,9 @@ class KaiHomePage extends StatelessWidget {
       ),
       // Loading, error, data. Every screen that fetches owes you all three.
       body: const EventsFeed(),
+      bottomNavigationBar: BottomNavigationBar(items: [
+        BottomNavigationBarItem(icon: Icon(Icons.refresh), label: "Refresh"),BottomNavigationBarItem(icon: Icon(Icons.restaurant_outlined), label: "Cook More")
+      ]),
     );
   }
 }
@@ -160,7 +163,6 @@ class KaiEventCard extends StatelessWidget {
             Text(howFar),
             EatButton(event: event),
           ],
-
           ),
           trailing: FavouriteButton(event: event),
         ),
@@ -201,13 +203,25 @@ class EatButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final vm = context.watch<EventsViewModel>();
-    final isEaten = vm.isFavourite(event.id);
-    return IconButton(
-      icon: Icon(isEaten ? Icons.star : Icons.star_border),
-      color: isEaten ? Colors.amber : null,
-      tooltip: 'Favourite',
-      onPressed: () =>
-          context.read<EventsViewModel>().toggleFavourite(event.id),
+    final isEaten = vm.isEaten(event.id);
+    final canEat = event.isActive;
+
+    if (!canEat) { // null case "return nothing"
+      return const SizedBox.shrink();
+    }
+
+    return Container(
+      margin: EdgeInsets.all(2),
+      padding: EdgeInsets.all(2),
+      color: isEaten? Colors.red : Colors.green,
+      child: IconButton(
+        // icon: Icon(isEaten ? Icons.star : Icons.star_border),
+        icon: isEaten? Text("ATE") : Text("EAT"),
+        color: isEaten ? Colors.amber : null,
+        tooltip: 'Favourite',
+        onPressed: () =>
+            context.read<EventsViewModel>().setEaten(event.id),
+      ),
     );
   }
 }

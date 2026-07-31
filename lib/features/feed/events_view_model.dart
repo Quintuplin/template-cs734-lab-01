@@ -17,13 +17,20 @@ class EventsViewModel extends ChangeNotifier {
   List<KaiEvent> events = [];
 
   final Set<String> _favouriteIds = {};
+  final Set<String> _eatenIds = {};
 
   bool isFavourite(String id) => _favouriteIds.contains(id);
+  bool isEaten(String id) => _eatenIds.contains(id);
   int get favouriteCount => _favouriteIds.length;
 
   // The detail screen is handed an id out of the URL, not an event object, so
   // something has to be able to turn one into the other.
   KaiEvent byId(String id) => events.firstWhere((event) => event.id == id);
+
+  void setEaten(String id){
+    _eatenIds.add(id); //don't need to worry about duplicates in a set
+    notifyListeners();
+  }
 
   void toggleFavourite(String id) {
     if (!_favouriteIds.remove(id)) {
